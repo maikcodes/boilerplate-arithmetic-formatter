@@ -21,10 +21,23 @@ def check_operations(problems):
     return array_problems
     
 def check_digits(array_problems):
+    max_digits = 4
+    int_array_problems = []
     for problem in array_problems:
-        if (type(problem[0]) is str) and (type(problem[2]) is str):
-            return False
-    return True
+        first_number = problem[0]
+        second_number = problem[2]
+        if (len(first_number) > max_digits or len(second_number) > max_digits):
+            return 'Error: Numbers cannot be more than four digits.'
+        
+        try:
+            int_first_number = int(first_number)
+            int_second_number = int(second_number)
+            int_array_problems.append([int_first_number, problem[1] , int_second_number])
+        except ValueError:
+            return 'Error: Numbers must only contain digits.'
+        
+    
+    return int_array_problems
 
 def arithmetic_arranger(problems, results=True):
 
@@ -36,10 +49,12 @@ def arithmetic_arranger(problems, results=True):
         if not array_problems:
             return "Error: Operator must be '+' or '-'."
         
-        if not check_digits(array_problems):
-            return 'Error: Numbers must only contain digits.'
+        checked_digits = check_digits(array_problems)
+        if type(checked_digits) is str:
+            return checked_digits
         
         print(array_problems)        
+        print(checked_digits)        
 
 
     # return arranged_problems
